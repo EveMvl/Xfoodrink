@@ -114,8 +114,8 @@ const Profile = () => {
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
             <Text style={[styles.name, { color: theme.text, marginBottom: 0 }]}>Eveline Marvelia</Text>
             {gender && (
-              <View style={[styles.genderBadge, { backgroundColor: gender === 'Pria' ? '#3B82F6' : '#EC4899' }]}>
-                <Ionicons name={gender === 'Pria' ? "male" : "female"} size={14} color="#FFF" />
+              <View style={[styles.genderBadge, { backgroundColor: gender === 'Male' ? '#3B82F6' : '#EC4899' }]}>
+                <Ionicons name={gender === 'Male' ? "male" : "female"} size={14} color="#FFF" />
               </View>
             )}
           </View>

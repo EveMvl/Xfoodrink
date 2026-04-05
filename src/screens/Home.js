@@ -148,7 +148,7 @@ const Home = () => {
               <>
                 <Text style={[styles.modalTitle, { color: theme.text }]}>Welcome to Xfoodie!</Text>
                 <Text style={[styles.modalSubtitle, { color: theme.text }]}>I'm a...</Text>
-                {['Pria', 'Wanita'].map(opt => (
+                {['Male', 'Female'].map(opt => (
                   <TouchableOpacity
                     key={opt}
                     style={[styles.modalOption, { backgroundColor: theme.primary }]}
@@ -160,8 +160,8 @@ const Home = () => {
               </>
             ) : (
               <>
-                <Text style={[styles.modalTitle, { color: theme.text }]}>Satu langkah lagi!</Text>
-                <Text style={[styles.modalSubtitle, { color: theme.text }]}>Aku adalah seorang...</Text>
+                <Text style={[styles.modalTitle, { color: theme.text }]}>Last step!</Text>
+                <Text style={[styles.modalSubtitle, { color: theme.text }]}>My primary goal is...</Text>
                 {['Weight Loss', 'Healthy Food Lover', 'Body Builder', 'Regular User'].map(opt => (
                   <TouchableOpacity
                     key={opt}

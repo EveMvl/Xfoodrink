@@ -147,7 +147,7 @@ const Home = () => {
             {!tempGender ? (
               <>
                 <Text style={[styles.modalTitle, { color: theme.text }]}>Welcome to Xfoodie!</Text>
-                <Text style={[styles.modalSubtitle, { color: theme.text }]}>Silakan pilih gender kamu</Text>
+                <Text style={[styles.modalSubtitle, { color: theme.text }]}>I'm a...</Text>
                 {['Pria', 'Wanita'].map(opt => (
                   <TouchableOpacity
                     key={opt}
@@ -161,7 +161,7 @@ const Home = () => {
             ) : (
               <>
                 <Text style={[styles.modalTitle, { color: theme.text }]}>Satu langkah lagi!</Text>
-                <Text style={[styles.modalSubtitle, { color: theme.text }]}>Apa tujuan utama kamu?</Text>
+                <Text style={[styles.modalSubtitle, { color: theme.text }]}>Aku adalah seorang...</Text>
                 {['Weight Loss', 'Healthy Food Lover', 'Body Builder', 'Regular User'].map(opt => (
                   <TouchableOpacity
                     key={opt}

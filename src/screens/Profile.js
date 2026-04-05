@@ -97,11 +97,13 @@ const Profile = () => {
               <Text style={styles.focusLabelText}>I'm a {focusArea}</Text>
             </View>
           )}
-          <View style={styles.avatarContainer}>
-            <Image 
-              source={{ uri: avatar }} 
-              style={styles.avatar} 
-            />
+          <View style={styles.avatarWrapper}>
+            <View style={styles.avatarContainer}>
+              <Image 
+                source={{ uri: avatar }} 
+                style={styles.avatar} 
+              />
+            </View>
             <TouchableOpacity 
               style={[styles.editIconBtn, { backgroundColor: theme.primary }]}
               onPress={pickImage}
@@ -189,12 +191,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
   },
-  avatarContainer: {
+  avatarWrapper: {
     width: 100,
     height: 100,
-    borderRadius: 50,
     marginBottom: 20,
     marginTop: 10,
+    position: 'relative',
+    alignSelf: 'center',
+  },
+  avatarContainer: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 50,
     borderWidth: 3,
     borderColor: '#10B981',
     overflow: 'hidden',
@@ -202,13 +210,17 @@ const styles = StyleSheet.create({
   avatar: { width: '100%', height: '100%' },
   editIconBtn: {
     position: 'absolute',
-    bottom: 0,
-    right: 0,
+    bottom: -5,
+    right: -5,
     padding: 8,
-    borderRadius: 15,
-    borderWidth: 2,
+    borderRadius: 20,
+    borderWidth: 3,
     borderColor: '#FFF',
-    elevation: 4,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
   },
   name: { fontSize: 24, fontWeight: 'bold' },
   genderBadge: {

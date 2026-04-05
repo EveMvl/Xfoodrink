@@ -20,13 +20,14 @@ const historySlice = createSlice({
   },
   reducers: {
     addTransaction: (state, action) => {
-      const { items, total } = action.payload;
+      const { items, total, orderType } = action.payload;
       const id = generateId();
       const date = new Date().toISOString();
       state.transactions.unshift({
         id,
         items,
         total,
+        orderType,
         date,
       });
     },

@@ -235,7 +235,7 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  swiperContainer: { height: 220, marginBottom: 15 },
+  swiperContainer: { height: 440, marginBottom: 15 },
   slide: { flex: 1, justifyContent: 'flex-end' },
   slideImage: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%', borderRadius: 10 },
   slideOverlay: {
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     overflow: 'hidden',
   },
-  cardImage: { width: '100%', height: 120, resizeMode: 'cover' },
+  cardImage: { width: '100%', height: 240, resizeMode: 'cover' },
   cardBody: { padding: 10 },
   cardTitle: { fontSize: 16, fontWeight: '600' },
   cardPrice: { fontSize: 14, fontWeight: 'bold', marginTop: 5 },
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end', padding: 5, marginBottom: 10,
   },
   detailImage: {
-    width: '100%', height: 250, borderRadius: 20, marginBottom: 20, resizeMode: 'cover',
+    width: '100%', height: 500, borderRadius: 20, marginBottom: 20, resizeMode: 'cover',
   },
   detailHeader: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 15,

@@ -18,6 +18,7 @@ const Cart = () => {
   const theme = isDarkMode ? Colors.dark : Colors.light;
 
   const [isCheckoutModalVisible, setCheckoutModalVisible] = useState(false);
+  const [orderType, setOrderType] = useState('Dine In');
 
   const selectedItems = cartItems.filter(item => item.selected);
   const isAllSelected = cartItems.length > 0 && selectedItems.length === cartItems.length;
@@ -39,7 +40,7 @@ const Cart = () => {
   };
 
   const confirmCheckout = () => {
-    dispatch(addTransaction({ items: selectedItems, total }));
+    dispatch(addTransaction({ items: selectedItems, total, orderType }));
     dispatch(checkoutSelectedItems());
     setCheckoutModalVisible(false);
     navigation.navigate('History');
@@ -151,8 +152,33 @@ const Cart = () => {
           <View style={[styles.modalContent, { backgroundColor: theme.card }]}>
             <Text style={[styles.modalTitle, { color: theme.text }]}>Konfirmasi Checkout</Text>
             <Text style={[styles.modalSubtitle, { color: theme.text }]}>
-              Yakin mau melakukan checkout? Atau mau nambah produk lain dulu?
+              Silakan pilih tipe pesanan kamu sebelum melakukan checkout.
             </Text>
+
+            <View style={styles.orderTypeContainer}>
+              <TouchableOpacity 
+                onPress={() => setOrderType('Dine In')}
+                style={[
+                  styles.typeBtn, 
+                  { borderColor: theme.primary, backgroundColor: orderType === 'Dine In' ? theme.primary : 'transparent' }
+                ]}
+              >
+                <Ionicons name="restaurant-outline" size={20} color={orderType === 'Dine In' ? '#FFF' : theme.primary} />
+                <Text style={[styles.typeBtnText, { color: orderType === 'Dine In' ? '#FFF' : theme.text }]}>Makan di Sini</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity 
+                onPress={() => setOrderType('Bungkus')}
+                style={[
+                  styles.typeBtn, 
+                  { borderColor: theme.primary, backgroundColor: orderType === 'Bungkus' ? theme.primary : 'transparent' }
+                ]}
+              >
+                <Ionicons name="bag-handle-outline" size={20} color={orderType === 'Bungkus' ? '#FFF' : theme.primary} />
+                <Text style={[styles.typeBtnText, { color: orderType === 'Bungkus' ? '#FFF' : theme.text }]}>Bungkus</Text>
+              </TouchableOpacity>
+            </View>
+
             <View style={styles.modalActions}>
               <TouchableOpacity
                 style={[styles.modalBtn, { backgroundColor: '#EF4444' }]}
@@ -248,7 +274,16 @@ const styles = StyleSheet.create({
   modalBtn: {
     flex: 1, padding: 15, borderRadius: 10, alignItems: 'center', marginHorizontal: 5
   },
-  modalBtnText: { color: '#FFF', fontSize: 16, fontWeight: 'bold' }
+  modalBtnText: { color: '#FFF', fontSize: 16, fontWeight: 'bold' },
+  
+  orderTypeContainer: {
+    flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginBottom: 25
+  },
+  typeBtn: {
+    flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+    padding: 12, borderRadius: 10, borderWidth: 1.5, marginHorizontal: 5,
+  },
+  typeBtnText: { marginLeft: 8, fontWeight: 'bold', fontSize: 14 }
 });
 
 export default Cart;

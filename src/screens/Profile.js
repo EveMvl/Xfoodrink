@@ -52,7 +52,7 @@ const Profile = () => {
     return (
       <View style={[styles.podiumCol, { height, justifyContent: 'flex-end' }]}>
         <View style={styles.podiumProductContainer}>
-          <Image source={{ uri: product.image }} style={styles.podiumImage} />
+          <Image source={product.image} style={styles.podiumImage} />
           <Text style={[styles.podiumProductName, { color: theme.text }]} numberOfLines={2}>
             {product.name}
           </Text>

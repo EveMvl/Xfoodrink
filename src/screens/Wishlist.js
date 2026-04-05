@@ -65,7 +65,7 @@ const Wishlist = () => {
       renderLeftActions={() => renderLeftActions(item)}
     >
       <View style={[styles.wishlistItem, { backgroundColor: theme.card, borderBottomColor: theme.border }]}>
-        <Image source={{ uri: item.image }} style={styles.itemImage} />
+        <Image source={item.image} style={styles.itemImage} />
         <View style={styles.itemInfo}>
           <Text style={[styles.itemName, { color: theme.text }]} numberOfLines={1}>{item.name}</Text>
           <Text style={[styles.itemPrice, { color: theme.accent }]}>Rp {item.price.toLocaleString('id-ID')}</Text>

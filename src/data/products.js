@@ -4,7 +4,7 @@ export const initialProducts = [
     category: 'Drink',
     name: 'Choco Mint Protein Shake',
     price: 45000,
-    image: 'https://images.unsplash.com/photo-1541544741938-0af808ec7175?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', // Mint green look
+    image: require('../../assets/images/chocomintproteinshake.jpeg'),
     description: 'Refreshing choco mint taste in 550ml, containing exactly 130cal.'
   },
   {
@@ -12,7 +12,7 @@ export const initialProducts = [
     category: 'Drink',
     name: 'Chocolate Protein Shake',
     price: 45000,
-    image: 'https://images.unsplash.com/photo-1572490122747-3968b75fbc74?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', // Choco look
+    image: require('../../assets/images/chocolateproteinshake.jpeg'),
     description: 'Rich dark chocolate protein shake in 550ml, containing exactly 130cal.'
   },
   {
@@ -20,7 +20,7 @@ export const initialProducts = [
     category: 'Drink',
     name: 'Strawberry Protein Shake',
     price: 45000,
-    image: 'https://images.unsplash.com/photo-1579954115545-a95711b6a726?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', // Strawberry
+    image: require('../../assets/images/strawberryproteinshake.jpeg'),
     description: 'Sweet and nutritious strawberry shake in 550ml, containing exactly 130cal.'
   },
   {
@@ -28,7 +28,7 @@ export const initialProducts = [
     category: 'Food',
     name: 'Protein Ball (Chocolate)',
     price: 25000,
-    image: 'https://images.unsplash.com/photo-1549419163-9524fceea7e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', // Chocolate balls
+    image: require('../../assets/images/proteinballchocolate.jpeg'),
     description: 'Delicious bite-sized protein snacks. 3 pcs / 24cal total.'
   },
   {
@@ -36,7 +36,7 @@ export const initialProducts = [
     category: 'Food',
     name: 'Protein Ball (Kacang)',
     price: 25000,
-    image: 'https://images.unsplash.com/photo-1550990425-470fc38d4a9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', // Peanut balls
+    image: require('../../assets/images/proteinballkacang.jpeg'),
     description: 'Peanut-butter based energy protein bites. 3 pcs / 24cal total.'
   },
   {
@@ -44,7 +44,7 @@ export const initialProducts = [
     category: 'Food',
     name: 'Protein Ball (Wijen)',
     price: 25000,
-    image: 'https://images.unsplash.com/photo-1499638673689-79a0b5115d87?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', // Sesame balls
+    image: require('../../assets/images/proteinballwijen.jpeg'),
     description: 'Sesame coated healthy protein snacks. 3 pcs / 24cal total.'
   }
 ];

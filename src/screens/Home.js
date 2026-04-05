@@ -22,6 +22,8 @@ const Home = () => {
 
   const [activeCategory, setActiveCategory] = useState('All');
   const [tempGender, setTempGender] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isDetailModalVisible, setDetailModalVisible] = useState(false);
 
   const highlightProducts = initialProducts.slice(0, 5);
 
@@ -53,8 +55,15 @@ const Home = () => {
   const renderProductItem = ({ item }) => {
     const isWished = wishlistItems.some(i => i.id === item.id);
     return (
-      <View style={[styles.card, { backgroundColor: theme.card, borderColor: theme.border }]}>
-        <Image source={{ uri: item.image }} style={styles.cardImage} />
+      <TouchableOpacity 
+        activeOpacity={0.9}
+        onPress={() => {
+          setSelectedProduct(item);
+          setDetailModalVisible(true);
+        }}
+        style={[styles.card, { backgroundColor: theme.card, borderColor: theme.border }]}
+      >
+        <Image source={item.image} style={styles.cardImage} />
         <View style={styles.cardBody}>
           <Text style={[styles.cardTitle, { color: theme.text }]} numberOfLines={1}>{item.name}</Text>
           <Text style={[styles.cardPrice, { color: theme.accent }]}>Rp {item.price.toLocaleString('id-ID')}</Text>
@@ -67,7 +76,7 @@ const Home = () => {
             <Ionicons name="add" size={24} color="#FFF" />
           </TouchableOpacity>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -78,13 +87,21 @@ const Home = () => {
         <View style={styles.swiperContainer}>
           <Swiper autoplay showsPagination dotColor={theme.border} activeDotColor={theme.primary} autoplayTimeout={4}>
             {highlightProducts.map((prod) => (
-              <View key={prod.id} style={styles.slide}>
-                <Image source={{ uri: prod.image }} style={styles.slideImage} />
+              <TouchableOpacity 
+                key={prod.id} 
+                style={styles.slide}
+                activeOpacity={0.9}
+                onPress={() => {
+                  setSelectedProduct(prod);
+                  setDetailModalVisible(true);
+                }}
+              >
+                <Image source={prod.image} style={styles.slideImage} />
                 <View style={styles.slideOverlay}>
                   <Text style={styles.slideTitle}>{prod.name}</Text>
                   <Text style={styles.slideSubtitle}>Rp {prod.price.toLocaleString('id-ID')}</Text>
                 </View>
-              </View>
+              </TouchableOpacity>
             ))}
           </Swiper>
         </View>
@@ -162,6 +179,56 @@ const Home = () => {
           </View>
         </View>
       </Modal>
+
+      {/* Product Detail Modal */}
+      <Modal 
+        visible={isDetailModalVisible} 
+        transparent 
+        animationType="slide"
+        onRequestClose={() => setDetailModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={[styles.detailModalContent, { backgroundColor: theme.card }]}>
+            <TouchableOpacity 
+              style={styles.closeBtn} 
+              onPress={() => setDetailModalVisible(false)}
+            >
+              <Ionicons name="close" size={28} color={theme.text} />
+            </TouchableOpacity>
+            
+            {selectedProduct && (
+              <ScrollView showsVerticalScrollIndicator={false}>
+                <Image source={selectedProduct.image} style={styles.detailImage} />
+                <View style={styles.detailHeader}>
+                  <View>
+                    <Text style={[styles.detailCategory, { color: theme.primary }]}>{selectedProduct.category}</Text>
+                    <Text style={[styles.detailTitle, { color: theme.text }]}>{selectedProduct.name}</Text>
+                  </View>
+                  <Text style={[styles.detailPrice, { color: theme.accent }]}>Rp {selectedProduct.price.toLocaleString('id-ID')}</Text>
+                </View>
+                
+                <View style={[styles.divider, { backgroundColor: theme.border }]} />
+                
+                <Text style={[styles.detailSectionLabel, { color: theme.text }]}>Description</Text>
+                <Text style={[styles.detailDescription, { color: theme.text }]}>
+                  {selectedProduct.description}
+                </Text>
+                
+                <TouchableOpacity 
+                  style={[styles.detailCartBtn, { backgroundColor: theme.primary }]}
+                  onPress={() => {
+                    handleAddToCart(selectedProduct);
+                    setDetailModalVisible(false);
+                  }}
+                >
+                  <Ionicons name="cart" size={22} color="#FFF" style={{ marginRight: 10 }} />
+                  <Text style={styles.detailCartBtnText}>Add to Cart</Text>
+                </TouchableOpacity>
+              </ScrollView>
+            )}
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -220,7 +287,31 @@ const styles = StyleSheet.create({
   modalOption: {
     width: '100%', padding: 15, borderRadius: 10, alignItems: 'center', marginBottom: 15
   },
-  modalOptionText: { color: '#FFF', fontSize: 16, fontWeight: 'bold' }
+  modalOptionText: { color: '#FFF', fontSize: 16, fontWeight: 'bold' },
+  
+  // Detail Modal Styles
+  detailModalContent: {
+    width: '90%', maxHeight: '80%', padding: 20, borderRadius: 25,
+  },
+  closeBtn: {
+    alignSelf: 'flex-end', padding: 5, marginBottom: 10,
+  },
+  detailImage: {
+    width: '100%', height: 250, borderRadius: 20, marginBottom: 20, resizeMode: 'cover',
+  },
+  detailHeader: {
+    flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 15,
+  },
+  detailCategory: { fontSize: 14, fontWeight: 'bold', textTransform: 'uppercase', marginBottom: 4 },
+  detailTitle: { fontSize: 22, fontWeight: 'bold' },
+  detailPrice: { fontSize: 20, fontWeight: 'bold' },
+  divider: { height: 1.5, marginVertical: 15 },
+  detailSectionLabel: { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
+  detailDescription: { fontSize: 15, lineHeight: 22, color: '#666', marginBottom: 25 },
+  detailCartBtn: {
+    flexDirection: 'row', padding: 16, borderRadius: 15, alignItems: 'center', justifyContent: 'center',
+  },
+  detailCartBtnText: { color: '#FFF', fontSize: 18, fontWeight: 'bold' }
 });
 
 export default Home;

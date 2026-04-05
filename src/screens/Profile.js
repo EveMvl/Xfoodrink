@@ -1,6 +1,8 @@
 import React, { useContext, useMemo } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
-import { useSelector } from 'react-redux';
+import { View, Text, StyleSheet, Image, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import * as ImagePicker from 'expo-image-picker';
+import { setAvatar } from '../store/userSlice';
 import { ThemeContext } from '../context/ThemeContext';
 import { Colors } from '../data/products';
 import Header from '../components/Header';
@@ -12,9 +14,25 @@ const Profile = () => {
   const { isDarkMode } = useContext(ThemeContext);
   const theme = isDarkMode ? Colors.dark : Colors.light;
 
+  const dispatch = useDispatch();
   const focusArea = useSelector(state => state.user.focusArea);
   const gender = useSelector(state => state.user.gender);
+  const avatar = useSelector(state => state.user.avatar);
   const transactions = useSelector(state => state.history.transactions);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.8,
+    });
+
+    if (!result.canceled) {
+      dispatch(setAvatar(result.assets[0].uri));
+    }
+  };
 
   const { topProducts, totalSpending } = useMemo(() => {
     let spending = 0;
@@ -81,9 +99,15 @@ const Profile = () => {
           )}
           <View style={styles.avatarContainer}>
             <Image 
-              source={{ uri: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' }} 
+              source={{ uri: avatar }} 
               style={styles.avatar} 
             />
+            <TouchableOpacity 
+              style={[styles.editIconBtn, { backgroundColor: theme.primary }]}
+              onPress={pickImage}
+            >
+              <Ionicons name="pencil" size={14} color="#FFF" />
+            </TouchableOpacity>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
             <Text style={[styles.name, { color: theme.text, marginBottom: 0 }]}>Eveline Marvelia</Text>
@@ -176,6 +200,16 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   avatar: { width: '100%', height: '100%' },
+  editIconBtn: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    padding: 8,
+    borderRadius: 15,
+    borderWidth: 2,
+    borderColor: '#FFF',
+    elevation: 4,
+  },
   name: { fontSize: 24, fontWeight: 'bold' },
   genderBadge: {
     padding: 6,

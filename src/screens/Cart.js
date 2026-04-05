@@ -161,12 +161,29 @@ const Cart = () => {
             contentContainerStyle={styles.listContent}
           />
           <View style={[styles.footer, { backgroundColor: theme.card, borderTopColor: theme.border }]}>
-            <View style={styles.totalRow}>
-              <Text style={[styles.totalLabel, { color: theme.text }]}>Total:</Text>
-              <Text style={[styles.totalValue, { color: theme.primary }]}>Rp {total.toLocaleString('id-ID')}</Text>
+            <View style={styles.breakdownContainer}>
+              <View style={styles.breakdownRow}>
+                <Text style={[styles.breakdownLabel, { color: theme.text }]}>Subtotal</Text>
+                <Text style={[styles.breakdownValue, { color: theme.text }]}>Rp {total.toLocaleString('id-ID')}</Text>
+              </View>
+              <View style={styles.breakdownRow}>
+                <Text style={[styles.breakdownLabel, { color: theme.text }]}>PPN (11%)</Text>
+                <Text style={[styles.breakdownValue, { color: theme.text }]}>Rp {Math.round(total * 0.11).toLocaleString('id-ID')}</Text>
+              </View>
+              <View style={styles.breakdownRow}>
+                <Text style={[styles.breakdownLabel, { color: theme.text }]}>Service Fee</Text>
+                <Text style={[styles.breakdownValue, { color: theme.text }]}>Rp 2.000</Text>
+              </View>
+              <View style={[styles.breakdownDivider, { backgroundColor: theme.border }]} />
+              <View style={styles.totalRow}>
+                <Text style={[styles.totalLabel, { color: theme.text }]}>Total Pembayaran</Text>
+                <Text style={[styles.totalValue, { color: theme.primary }]}>
+                  Rp {(total + Math.round(total * 0.11) + 2000).toLocaleString('id-ID')}
+                </Text>
+              </View>
             </View>
             <TouchableOpacity onPress={handleCheckoutBtnPress} style={[styles.checkoutBtn, { backgroundColor: theme.primary }]}>
-              <Text style={styles.checkoutText}>Checkout</Text>
+              <Text style={styles.checkoutText}>Checkout Sekarang</Text>
             </TouchableOpacity>
           </View>
         </>
@@ -254,13 +271,21 @@ const styles = StyleSheet.create({
   totalLabel: { fontSize: 18, fontWeight: 'bold' },
   totalValue: { fontSize: 20, fontWeight: 'bold' },
   checkoutBtn: {
-    padding: 15,
-    borderRadius: 8,
+    padding: 18,
+    borderRadius: 12,
     alignItems: 'center',
+    marginTop: 10,
   },
   checkoutText: { color: '#FFF', fontSize: 18, fontWeight: 'bold' },
   emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   emptyText: { marginTop: 15, fontSize: 18 },
+
+  // Breakdown Styles
+  breakdownContainer: { marginBottom: 15 },
+  breakdownRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
+  breakdownLabel: { fontSize: 14, opacity: 0.8 },
+  breakdownValue: { fontSize: 14, fontWeight: '500' },
+  breakdownDivider: { height: 1, marginVertical: 12, opacity: 0.5 },
   
   // Modal Styles
   modalOverlay: {

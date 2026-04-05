@@ -10,17 +10,35 @@ import { Ionicons } from '@expo/vector-icons';
 const History = () => {
   const transactions = useSelector(state => state.history.transactions);
   const [search, setSearch] = useState('');
+  const [activeFilter, setActiveFilter] = useState('All');
   const navigation = useNavigation();
   const { isDarkMode } = useContext(ThemeContext);
   const theme = isDarkMode ? Colors.dark : Colors.light;
 
-  const filteredData = transactions.filter(t => t.id.toLowerCase().includes(search.toLowerCase()));
+  const filteredData = transactions.filter(t => {
+    const matchesSearch = t.id.toLowerCase().includes(search.toLowerCase());
+    const matchesFilter = activeFilter === 'All' || t.orderType === activeFilter;
+    return matchesSearch && matchesFilter;
+  });
 
   const renderItem = ({ item }) => (
     <View style={[styles.historyCard, { backgroundColor: theme.card, borderColor: theme.border }]}>
       <View style={styles.cardHeader}>
-        <Text style={[styles.transactionId, { color: theme.text }]}>Code: {item.id}</Text>
-        <Text style={[styles.date, { color: '#888' }]}>{new Date(item.date).toLocaleDateString()}</Text>
+        <View>
+          <Text style={[styles.transactionId, { color: theme.text }]}>Code: {item.id}</Text>
+          <Text style={[styles.date, { color: '#888' }]}>{new Date(item.date).toLocaleDateString()}</Text>
+        </View>
+        <View style={[
+          styles.orderTypeTag, 
+          { backgroundColor: item.orderType === 'Dine Out' ? theme.accent + '20' : theme.primary + '20' }
+        ]}>
+          <Text style={[
+            styles.orderTypeTagText, 
+            { color: item.orderType === 'Dine Out' ? theme.accent : theme.primary }
+          ]}>
+            {item.orderType || 'Dine In'}
+          </Text>
+        </View>
       </View>
       <Text style={[styles.totalText, { color: theme.accent }]}>Total: Rp {item.total.toLocaleString('id-ID')}</Text>
       
@@ -46,6 +64,29 @@ const History = () => {
           value={search}
           onChangeText={setSearch}
         />
+      </View>
+
+      <View style={styles.filterContainer}>
+        {['All', 'Dine In', 'Dine Out'].map(filter => (
+          <TouchableOpacity
+            key={filter}
+            onPress={() => setActiveFilter(filter)}
+            style={[
+              styles.filterChip,
+              { 
+                borderColor: theme.primary, 
+                backgroundColor: activeFilter === filter ? theme.primary : 'transparent' 
+              }
+            ]}
+          >
+            <Text style={[
+              styles.filterText,
+              { color: activeFilter === filter ? '#FFF' : theme.text }
+            ]}>
+              {filter}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
 
       {filteredData.length === 0 ? (
@@ -105,6 +146,32 @@ const styles = StyleSheet.create({
   detailBtnText: { color: '#FFF', fontWeight: 'bold' },
   emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   emptyText: { fontSize: 16 },
+  filterContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+    marginBottom: 15,
+  },
+  filterChip: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    marginRight: 10,
+  },
+  filterText: {
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  orderTypeTag: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  orderTypeTagText: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  }
 });
 
 export default History;

@@ -122,6 +122,32 @@ const Cart = () => {
         </View>
       ) : (
         <>
+          <View style={[styles.topOrderTypeContainer, { backgroundColor: theme.card, borderBottomColor: theme.border }]}>
+            <Text style={[styles.orderTypeLabel, { color: theme.text }]}>Tipe Pesanan:</Text>
+            <View style={styles.orderTypeButtons}>
+              <TouchableOpacity 
+                onPress={() => setOrderType('Dine In')}
+                style={[
+                  styles.typeBtnTop, 
+                  { borderColor: theme.primary, backgroundColor: orderType === 'Dine In' ? theme.primary : 'transparent' }
+                ]}
+              >
+                <Ionicons name="restaurant-outline" size={18} color={orderType === 'Dine In' ? '#FFF' : theme.primary} />
+                <Text style={[styles.typeBtnTextTop, { color: orderType === 'Dine In' ? '#FFF' : theme.text }]}>Dine In</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity 
+                onPress={() => setOrderType('Dine Out')}
+                style={[
+                  styles.typeBtnTop, 
+                  { borderColor: theme.primary, backgroundColor: orderType === 'Dine Out' ? theme.primary : 'transparent' }
+                ]}
+              >
+                <Ionicons name="bag-handle-outline" size={18} color={orderType === 'Dine Out' ? '#FFF' : theme.primary} />
+                <Text style={[styles.typeBtnTextTop, { color: orderType === 'Dine Out' ? '#FFF' : theme.text }]}>Dine Out</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
           <View style={[styles.selectAllContainer, { borderBottomColor: theme.border }]}>
             <TouchableOpacity onPress={() => dispatch(toggleSelectAll(!isAllSelected))} style={styles.selectAllBtn}>
               <Ionicons name={isAllSelected ? "checkbox" : "square-outline"} size={26} color={isAllSelected ? theme.primary : theme.text} />
@@ -152,32 +178,8 @@ const Cart = () => {
           <View style={[styles.modalContent, { backgroundColor: theme.card }]}>
             <Text style={[styles.modalTitle, { color: theme.text }]}>Konfirmasi Checkout</Text>
             <Text style={[styles.modalSubtitle, { color: theme.text }]}>
-              Silakan pilih tipe pesanan kamu sebelum melakukan checkout.
+              Yakin mau melakukan checkout pesanan kamu sekarang?
             </Text>
-
-            <View style={styles.orderTypeContainer}>
-              <TouchableOpacity 
-                onPress={() => setOrderType('Dine In')}
-                style={[
-                  styles.typeBtn, 
-                  { borderColor: theme.primary, backgroundColor: orderType === 'Dine In' ? theme.primary : 'transparent' }
-                ]}
-              >
-                <Ionicons name="restaurant-outline" size={20} color={orderType === 'Dine In' ? '#FFF' : theme.primary} />
-                <Text style={[styles.typeBtnText, { color: orderType === 'Dine In' ? '#FFF' : theme.text }]}>Makan di Sini</Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity 
-                onPress={() => setOrderType('Bungkus')}
-                style={[
-                  styles.typeBtn, 
-                  { borderColor: theme.primary, backgroundColor: orderType === 'Bungkus' ? theme.primary : 'transparent' }
-                ]}
-              >
-                <Ionicons name="bag-handle-outline" size={20} color={orderType === 'Bungkus' ? '#FFF' : theme.primary} />
-                <Text style={[styles.typeBtnText, { color: orderType === 'Bungkus' ? '#FFF' : theme.text }]}>Bungkus</Text>
-              </TouchableOpacity>
-            </View>
 
             <View style={styles.modalActions}>
               <TouchableOpacity
@@ -283,7 +285,39 @@ const styles = StyleSheet.create({
     flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
     padding: 12, borderRadius: 10, borderWidth: 1.5, marginHorizontal: 5,
   },
-  typeBtnText: { marginLeft: 8, fontWeight: 'bold', fontSize: 14 }
+  typeBtnText: { marginLeft: 8, fontWeight: 'bold', fontSize: 14 },
+
+  topOrderTypeContainer: {
+    padding: 15,
+    borderBottomWidth: 1,
+    marginBottom: 5,
+  },
+  orderTypeLabel: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textTransform: 'uppercase',
+    opacity: 0.7
+  },
+  orderTypeButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  typeBtnTop: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    marginHorizontal: 5,
+  },
+  typeBtnTextTop: {
+    marginLeft: 6,
+    fontWeight: 'bold',
+    fontSize: 14,
+  }
 });
 
 export default Cart;

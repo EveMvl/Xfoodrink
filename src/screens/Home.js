@@ -146,7 +146,7 @@ const Home = () => {
           <View style={[styles.modalContent, { backgroundColor: theme.card }]}>
             {!tempGender ? (
               <>
-                <Text style={[styles.modalTitle, { color: theme.text }]}>Welcome to Xfoodie!</Text>
+                <Text style={[styles.modalTitle, { color: theme.text }]}>Welcome to Xfoodrink!</Text>
                 <Text style={[styles.modalSubtitle, { color: theme.text }]}>I'm a...</Text>
                 {['Male', 'Female'].map(opt => (
                   <TouchableOpacity
